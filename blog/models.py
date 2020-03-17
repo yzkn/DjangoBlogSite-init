@@ -9,6 +9,9 @@ from django.db import models
 from django.utils import timezone
 
 
+from django.contrib.auth.models import Group
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
@@ -59,6 +62,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(blank=True, null=True)
     is_public = models.BooleanField(default=False)
+    group = models.ForeignKey(Group, on_delete=models.PROTECT)
 
     class Meta:
         ordering = ['-created_at']
